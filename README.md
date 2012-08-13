@@ -1,6 +1,8 @@
 # FileBank module for Zend Framework 2
 
-This module provides a way to store files in a structured database consisting of folders and database.
+This module provides a way to store files in a structured database and file accessors to obtain the file for download without
+the need to setup public folders and worry about security. This is an initial version of the package, see the bottom of this README
+for upcoming features.
 
 Requirements:
 
@@ -127,7 +129,7 @@ Features to be added in some point:
 
 - Version control of uploaded files
 - Image editing with GD (multiple different sizes per saved file)
-- <IMG> tag creation with ViewHelper
+- IMG tag creation with ViewHelper
 
 
 ## Questions or comments?
