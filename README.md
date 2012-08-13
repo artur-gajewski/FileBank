@@ -129,7 +129,7 @@ Features to be added in some point:
 
 - Version control of uploaded files
 - Image editing with GD (multiple different sizes per saved file)
-- Creation or IMG and A tags with ViewHelper
+- Creation of IMG and A tags with ViewHelper
 
 
 ## Questions or comments?
