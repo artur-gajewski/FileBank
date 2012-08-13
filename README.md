@@ -7,7 +7,6 @@ Requirements:
 - PHP 5.3
 - Zend Framework 2
 - Doctrine 2
-- GD
 
 See [https://github.com/artur-gajewski/FileBank](https://github.com/artur-gajewski/FileBank)
 
@@ -81,9 +80,17 @@ This will override the default settings of provided package with your own settin
 You can also modify default parameter settings that are provided with the package
 so that they would suit your needs. Such parameters are:
 
-- fileBankFolder = filebank root folder where the files will be saved to
-- defaultIsActive = should the file be set as active by default
-- chmod = after a folder is created, what chmod should it have
+```php
+'params' => array(
+        'fileBankFolder'  => '/data/filebank/', 
+        'defaultIsActive' => true,
+        'chmod'           => 0755,
+    ),
+```
+
+- fileBankFolder -> filebank root folder where the files will be saved to
+- defaultIsActive -> should the file be set as active by default
+- chmod -> after a folder is created, what chmod should it have
 
 
 ## Accessing FileBank from a controller
@@ -100,19 +107,32 @@ When you obtain the service and create the object, you can then use it to do the
 $newFile = $fileBank->save('/tmp/myfile.jpg');
 ```
 
-You will receive the saved file's entity from with you can get information from, with functions such as
-getId(), getName(), getSize() and getMimetype().
+The return value is the file's FileBank entity from which you can get information.
+
+getId() -> Identified of the file
+getName() -> File's original name and extension
+getSize() -> File's size in bytes
+getMimetype() -> Mime-Type of the file
 
 
 ## Downloading files from FileBank
 
-This package comes along with router and controller to enable file downloads directory from FileBank. All
-you need to do is point your request to:
+This package comes along with router and controller to enable file downloads directory from view scripts. All
+you need to do is point your view script's link to:
 
 ```php
 http://YourApplication.com/files/<id>
 ```
 ID is the identier for the file saved into FileBank.
+
+
+## Coming up...
+
+Features to be added in some point:
+
+- Version control of uploaded files
+- Image editing with GD (multiple different sizes per saved file)
+- <IMG> tag creation with ViewHelper
 
 
 ## Questions or comments?
