@@ -47,9 +47,10 @@ class Manager
     public function save($sourceFilePath)
     {
         $fileName = basename($sourceFilePath);
+        $mimetype = mime_content_type($sourceFilePath);
         
         $data = array('name'     => $fileName,
-                      'mimetype' => mime_content_type($sourceFilePath),
+                      'mimetype' => $mimetype,
                       'size'     => filesize($sourceFilePath),
                       'isactive' => $this->params['defaultIsActive'],
                      );
@@ -61,17 +62,17 @@ class Manager
         $this->em->flush();
         
         $newId = $file->get('id');
-        
-        $newPath = $this->params['fileBankFolder'] . $newId . '/' . $fileName;
+        $relativePath = $newId . '/' . $fileName;
+        $absolutePath = $this->params['fileBankFolder'] . $relativePath;
         
         try {
-            $this->createPath($newPath, $this->params['chmod'], true);
-            copy($sourceFilePath, $newPath);
+            $this->createPath($absolutePath, $this->params['chmod'], true);
+            copy($sourceFilePath, $absolutePath);
         } catch (Exception $e) {
             throw new \Exception('File cannot be saved.');
         }
 
-        return $newPath;
+        return $file;
     }
     
     /**

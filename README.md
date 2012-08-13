@@ -100,6 +100,21 @@ When you obtain the service and create the object, you can then use it to do the
 $newFile = $fileBank->save('/tmp/myfile.jpg');
 ```
 
+You will receive the saved file's entity from with you can get information from, with functions such as
+getId(), getName(), getSize() and getMimetype().
+
+
+## Downloading files from FileBank
+
+This package comes along with router and controller to enable file downloads directory from FileBank. All
+you need to do is point your request to:
+
+```php
+http://YourApplication.com/files/<id>
+```
+ID is the identier for the file saved into FileBank.
+
+
 ## Questions or comments?
 
 Feel free to email me with any questions or comments about this module
