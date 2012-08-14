@@ -84,14 +84,14 @@ so that they would suit your needs. Such parameters are:
 
 ```php
 'params' => array(
-        'fileBankFolder'  => '/data/filebank/', 
-        'defaultIsActive' => true,
-        'chmod'           => 0755,
+        'filebank_folder'   => '/data/filebank/', 
+        'default_is_active' => true,
+        'chmod'             => 0755,
     ),
 ```
 
-- fileBankFolder -> filebank root folder where the files will be saved to
-- defaultIsActive -> should the file be set as active by default
+- filebank_folder -> filebank root folder where the files will be saved to
+- default_is_active -> should the file be set as active by default
 - chmod -> after a folder is created, what chmod should it have
 
 
