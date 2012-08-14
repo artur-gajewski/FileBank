@@ -113,8 +113,8 @@ When you obtain the service and create the object, you can then use it to do the
 $newFile = $fileBank->save('/tmp/myfile.jpg');
 ```
 
-The return value is the file's FileBank entity from which you can get information. $file->getId() is the most important
-as this id is the folder name in which the file resides in.
+The return value is the file's FileBank entity from which you can get information usable in view helper.
+
 
 ## Downloading files from FileBank
 
