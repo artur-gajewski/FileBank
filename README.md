@@ -122,6 +122,12 @@ http://YourApplication.com/files/<id>
 ```
 ID is the identier for the file saved into FileBank.
 
+In the view script, you can use FileBank's view helper, which returns file's entity:
+
+<a href="<?php echo $this->getFileById(145)->getDownloadUrl(); ?>">Download this file</a>
+
+Once a user clicks on this generated URL, a download prompt will appear and file is available for download.
+
 
 ## Coming up...
 

@@ -45,6 +45,36 @@ class File
     protected $isactive;
     
     /**
+     * @var string $path 
+     */
+    protected $path;
+    
+    /**
+     * @var string $downloadUrl 
+     */
+    protected $downloadUrl;
+    
+    /**
+     * Getter for the file id
+     * 
+     * @return int 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Setter for the file id
+     * 
+     * @param int $value 
+     */
+    public function setId($value)
+    {
+        $this->id = $value;
+    }
+    
+    /**
      * Getter for the file name
      * 
      * @return string 
@@ -122,6 +152,46 @@ class File
     public function setIsActive($value)
     {
         $this->isActive = $value;
+    }
+    
+    /**
+     * Getter for the file's path
+     * 
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+    
+    /**
+     * Setter for the file's path
+     * 
+     * @param string $value
+     */
+    public function setPath($value)
+    {
+        $this->path = $value;
+    }
+    
+    /**
+     * Getter for the file's download URL
+     * 
+     * @return string 
+     */
+    public function getDownloadUrl()
+    {
+        return $this->downloadUrl;
+    }
+    
+    /**
+     * Setter for the file's download URL
+     * 
+     * @param string $value
+     */
+    public function setDownloadUrl($value)
+    {
+        $this->downloadUrl = $value;
     }
     
     /**

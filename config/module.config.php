@@ -5,8 +5,8 @@ namespace FileBank;
 return array(
     __NAMESPACE__ => array(
         'params' => array(
-            'fileBankFolder'  => '/data/filebank/', 
-            'defaultIsActive' => true,
+            'filebank_folder'  => '/data/filebank/', 
+            'default_is_active' => true,
             'chmod'           => 0755,
         ),
     ),
@@ -17,7 +17,17 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            __NAMESPACE__ . '-get' => array(
+            __NAMESPACE__ => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/files',
+                    'defaults' => array(
+                        'controller' => __NAMESPACE__ . '\Controller\File',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            __NAMESPACE__ . '-Download' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/files/:id',

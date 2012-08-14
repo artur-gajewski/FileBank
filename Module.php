@@ -34,4 +34,26 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
     
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                'getFileById' => function ($sm) {
+                    $locator = $sm->getServiceLocator();
+                    $config = $locator->get('Configuration');
+                    $params = $config['FileBank']['params'];
+                    
+                    $viewHelper = new View\Helper\FileBank();
+                    $viewHelper->setService($locator->get('FileBank'));
+                    $viewHelper->setParams($params);
+                    
+                    return $viewHelper;
+                },
+            ),
+        );
+
+    }
+
+
+    
 }

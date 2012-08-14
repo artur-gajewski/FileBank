@@ -52,7 +52,7 @@ class Manager
         $data = array('name'     => $fileName,
                       'mimetype' => $mimetype,
                       'size'     => filesize($sourceFilePath),
-                      'isactive' => $this->params['defaultIsActive'],
+                      'isactive' => $this->params['default_is_active'],
                      );
         
         $file = new File();
@@ -63,7 +63,7 @@ class Manager
         
         $newId = $file->get('id');
         $relativePath = $newId . '/' . $fileName;
-        $absolutePath = $this->params['fileBankFolder'] . $relativePath;
+        $absolutePath = $this->params['filebank_folder'] . $relativePath;
         
         try {
             $this->createPath($absolutePath, $this->params['chmod'], true);
