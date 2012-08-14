@@ -17,6 +17,11 @@ class Manager
     protected $em;
     
     /**
+     * @var array
+     */
+    protected $cache;
+    
+    /**
      * Set the Module specific configuration parameters
      * 
      * @param Array $params
@@ -25,6 +30,7 @@ class Manager
     public function __construct($params, $em) {
         $this->params = $params;
         $this->em = $em;
+        $this->cache = array();
     }
 
     /**
@@ -104,13 +110,20 @@ class Manager
     
     public function getFileById($fileId)
     {
-        
-        $entity = $this->em->find('FileBank\Entity\File', $fileId);
+        // Get the entity from cache if available
+        if (isset($this->cache[$fileId])) {
+            $entity = $this->cache[$fileId];
+        } else {
+            $entity = $this->em->find('FileBank\Entity\File', $fileId);
+        }
         
         if (!$entity) {
             throw new \Exception('File does not exist.', 404);
         }
         
+        // Cache the file entity so we don't have to access db on each call
+        // Enables to get multiple entity's properties at different times
+        $this->cache[$fileId] = $entity;
         return $entity;
     }
     
