@@ -51,14 +51,9 @@ class File
     protected $savepath;
     
     /**
-     * @var string $path 
-     */
-    protected $path;
-    
-    /**
      * @var string $downloadUrl 
      */
-    protected $downloadUrl;
+    protected $url;
     
     /**
      * Getter for the file id
@@ -185,9 +180,9 @@ class File
      * 
      * @return string 
      */
-    public function getDownloadUrl()
+    public function getUrl()
     {
-        return $this->downloadUrl;
+        return $this->url;
     }
     
     /**
@@ -195,9 +190,9 @@ class File
      * 
      * @param string $value
      */
-    public function setDownloadUrl($value)
+    public function setUrl($value)
     {
-        $this->downloadUrl = $value;
+        $this->url = $value;
     }
     
     /**

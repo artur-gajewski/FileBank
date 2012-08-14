@@ -1,8 +1,11 @@
 # FileBank module for Zend Framework 2
 
-This module provides a way to store files in a structured database and file accessors to obtain the file for download without
-the need to setup public folders and worry about security. This is an initial version of the package, see the bottom of this README
-for upcoming features.
+This module provides a way to store files in a structured database and file accessors to obtain the file for download or display without
+the need to setup public folders and worry about security and htaccess configurations. 
+
+View Helper is also provided for access to file's download URL as well as file information.
+
+This module is in active development stage. See the bottom of this README for upcoming features.
 
 Requirements:
 
@@ -126,7 +129,13 @@ ID is the identier for the file saved into FileBank.
 In the view script, you can use FileBank's view helper, which returns file's entity:
 
 ```php
-<a href="<?php echo $this->getFileById(145)->getDownloadUrl(); ?>">Download <?php echo $this->getFileById(145)->getName(); ?></a>
+<a href="<?php echo $this->getFileById(145)->getUrl(); ?>">Download <?php echo $this->getFileById(145)->getName(); ?></a>
+```
+
+Or, the file can be directly placed into IMG tag to display the image along with title data:
+
+```php
+<img title="<?php echo $this->getFileById(145)->getName(); ?>" src="<?php echo $this->getFileById(145)->getUrl(); ?>"/>
 ```
 
 Once a user clicks on this generated URL, a download prompt will appear and file is available for download.
@@ -136,9 +145,8 @@ Once a user clicks on this generated URL, a download prompt will appear and file
 
 Features to be added in some point:
 
-- Creation of IMG and A tags with ViewHelper
 - Version control of uploaded files
-- Image editing with GD (multiple different sizes per saved file)
+- Image editing with GD (multiple different sizes per saved image, configurable parameters)
 
 
 ## Questions or comments?

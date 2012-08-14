@@ -24,13 +24,8 @@ class FileBank extends AbstractHelper
      * 
      * @param integer $id
      * @return FileBank\Entity\File
-     * 
-     * Link Options:
-     *   class  = CSS class
-     *   prefix = ID prefix, will append -<fileid>
-     *   target = target for the link
      */
-    public function __invoke($id, $linkOptions = null)
+    public function __invoke($id)
     {
         $file = $this->service->getFileById($id);
         $file = $this->generateDynamicParameters($file);
@@ -48,7 +43,7 @@ class FileBank extends AbstractHelper
     {
         $urlHelper = $this->getView()->plugin('url');
         
-        $file->setDownloadUrl(
+        $file->setUrl(
                 $urlHelper('FileBank') . '/' . $file->getId()
                 );
         
