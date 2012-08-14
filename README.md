@@ -110,7 +110,7 @@ $fileBank = $this->getServiceLocator()->get('FileBank');
 When you obtain the service and create the object, you can then use it to do the magic:
 
 ```php
-$newFile = $fileBank->save('/tmp/myfile.jpg');
+$entity = $fileBank->save('/tmp/myfile.jpg');
 ```
 
 The return value is the file's FileBank entity from which you can get information usable in view helper.
