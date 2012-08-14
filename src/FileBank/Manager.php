@@ -40,7 +40,7 @@ class Manager
      */
     public function getRoot() 
     {
-        return $this->params['fileBankFolder'];
+        return $this->params['filebank_folder'];
     }
     
     /**
@@ -55,10 +55,14 @@ class Manager
         $fileName = basename($sourceFilePath);
         $mimetype = mime_content_type($sourceFilePath);
         
+        $hash = md5(microtime(true) . $fileName);
+        $savePath = substr($hash,0,1).'/'.substr($hash,1,1).'/';
+        
         $data = array('name'     => $fileName,
                       'mimetype' => $mimetype,
                       'size'     => filesize($sourceFilePath),
                       'isactive' => $this->params['default_is_active'],
+                      'savepath' => $savePath . $hash,
                      );
         
         $file = new File();
@@ -67,9 +71,7 @@ class Manager
         $this->em->persist($file);
         $this->em->flush();
         
-        $newId = $file->get('id');
-        $relativePath = $newId . '/' . $fileName;
-        $absolutePath = $this->params['filebank_folder'] . $relativePath;
+        $absolutePath = $this->params['filebank_folder'] . $savePath . $hash;
         
         try {
             $this->createPath($absolutePath, $this->params['chmod'], true);

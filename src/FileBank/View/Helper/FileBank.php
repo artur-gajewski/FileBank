@@ -5,7 +5,7 @@ namespace FileBank\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 use Zend\Http\Request;
 
-use FileBank\Entity\File;
+use FileBank\Entity\File as File;
 
 class FileBank extends AbstractHelper
 {
@@ -24,19 +24,37 @@ class FileBank extends AbstractHelper
      * 
      * @param integer $id
      * @return FileBank\Entity\File
+     * 
+     * Link Options:
+     *   class  = CSS class
+     *   prefix = ID prefix, will append -<fileid>
+     *   target = target for the link
      */
-    public function __invoke($id)
+    public function __invoke($id, $linkOptions = null)
     {
         $file = $this->service->getFileById($id);
-        
-        $urlHelper = $this->getView()->plugin('url');
-        
-        $file->setPath($this->params['filebank_folder'] . $file->getId() . '/' . $file->getName());
-        $file->setDownloadUrl($urlHelper('FileBank') . '/' . $file->getId());
-
+        $file = $this->generateDynamicParameters($file);
         return $file;
     }
 
+    /**
+     * Add dynamic data into the entity
+     * 
+     * @param FileBank\Entity\File $file
+     * @param Array $linkOptions
+     * @return FileBank\Entity\File
+     */
+    private function generateDynamicParameters(File $file) 
+    {
+        $urlHelper = $this->getView()->plugin('url');
+        
+        $file->setDownloadUrl(
+                $urlHelper('FileBank') . '/' . $file->getId()
+                );
+        
+        return $file;
+    }
+    
     /**
      * Get FileBank service.
      *

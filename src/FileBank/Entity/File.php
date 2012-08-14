@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $size
  * @property string $mimetype
  * @property string $isactive
+ * @property string $savepath
  */
 class File
 {
@@ -43,6 +44,11 @@ class File
      * @ORM\Column(type="integer")
      */
     protected $isactive;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $savepath;
     
     /**
      * @var string $path 
@@ -141,7 +147,7 @@ class File
      */
     public function getIsActive()
     {
-        return $this->isActive;
+        return $this->isactive;
     }
     
     /**
@@ -151,27 +157,27 @@ class File
      */
     public function setIsActive($value)
     {
-        $this->isActive = $value;
+        $this->isactive = $value;
     }
     
     /**
-     * Getter for the file's path
+     * Getter for the file's save path
      * 
      * @return string 
      */
-    public function getPath()
+    public function getSavePath()
     {
-        return $this->path;
+        return $this->savepath;
     }
     
     /**
-     * Setter for the file's path
+     * Setter for the file's save path
      * 
-     * @param string $value
+     * @param string $value 
      */
-    public function setPath($value)
+    public function setSavePath($value)
     {
-        $this->path = $value;
+        $this->savepath = $value;
     }
     
     /**
@@ -215,6 +221,7 @@ class File
         $this->setSize($data['size']);
         $this->setMimetype($data['mimetype']);
         $this->setIsActive($data['isactive']);
+        $this->setSavePath($data['savepath']);
     }
        
 }

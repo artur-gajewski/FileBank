@@ -44,6 +44,7 @@ CREATE TABLE filebank (
   size int(11) NOT NULL,
   mimetype varchar(250) NOT NULL,
   isactive int(11) NOT NULL,
+  savepath varchar(250) NOT NULL,
   PRIMARY KEY (id)
 );
 ```
@@ -90,9 +91,9 @@ so that they would suit your needs. Such parameters are:
     ),
 ```
 
-- filebank_folder -> filebank root folder where the files will be saved to
+- filebank_folder   -> filebank root folder where the files will be saved to
 - default_is_active -> should the file be set as active by default
-- chmod -> after a folder is created, what chmod should it have
+- chmod             -> after a folder is created, what chmod should it have
 
 
 ## Accessing FileBank from a controller
