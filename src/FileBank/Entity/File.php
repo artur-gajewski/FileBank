@@ -208,10 +208,12 @@ class File
      */
     public function setKeywords(Array $keywords) 
     {
+        $this->keywords->clear();
         foreach ($keywords as $keyword) {
-            $this->keywords->add($keyword);
+            if ($keyword instanceof FileBank\Entity\Keyword) {
+                $this->keywords->add($keyword);
+            }
         }
-        return $this;
     }
 
     /**

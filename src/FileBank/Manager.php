@@ -104,10 +104,6 @@ class Manager
             return $entities;
         }
         
-        if (!$entities) {
-            throw new \Exception('Files not found with a given keyword(s).', 404);
-        }
-        
         // Cache the file entity so we don't have to access db on each call
         // Enables to get multiple entity's properties at different times
         $this->cache[$id] = $entities;
