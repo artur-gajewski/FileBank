@@ -5,16 +5,16 @@ namespace FileBank\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class FileController extends AbstractActionController
+class FileController extends AbstractActionController 
 {
     /**
      * Get the file from FileBank and offer it for download 
      */
-    public function downloadAction()
+    public function downloadAction() 
     {
         $filelib = $this->getServiceLocator()->get('FileBank');
-        $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
-        
+        $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
+
         $file = $filelib->getFileById($id);
         $filePath = $filelib->getRoot() . $file->getSavePath();
 

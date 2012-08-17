@@ -48,6 +48,14 @@ CREATE TABLE filebank (
   mimetype varchar(250) NOT NULL,
   isactive int(11) NOT NULL,
   savepath varchar(250) NOT NULL,
+  keywords varchar(500),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE filebank_keyword (
+  id int(11) NOT NULL auto_increment,
+  fileid int(11) NOT NULL,
+  value varchar(250),
   PRIMARY KEY (id)
 );
 ```
@@ -114,6 +122,22 @@ $entity = $fileBank->save('/tmp/myfile.jpg');
 ```
 
 The return value is the file's FileBank entity from which you can get information usable in view helper.
+
+You can also attach keywords for a file by adding an array to the save() function
+
+```php
+$keywords = array('Foo', 'Bar', 'Hey');
+
+$entity = $fileBank->save('/tmp/myfile.jpg', keywords);
+```
+
+This will attach these three keywords to the file. You can fetch the files with a certain keyword(s) as follows:
+
+```php
+$fileBank->getFilesByKeywords(array('Foo', 'Hey'));
+```
+
+This will return an array of FileBank entities that match the keywords Foo and Hey. The keyword usage is case INSENSITIVE in both saving and fetching functions.
 
 
 ## Downloading files from FileBank
