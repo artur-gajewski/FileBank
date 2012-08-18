@@ -26,9 +26,11 @@ Go to your vendor directory and clone the module from Github:
 git clone https://github.com/artur-gajewski/FileBank
 ```
 
-To install all needed dependancies, run the Composer:
+Now go to your project root and install all needed dependancies, run the Composer:
 
 ```php
+curl -s https://getcomposer.org/installer | php
+
 php composer.phar install
 ```
 
