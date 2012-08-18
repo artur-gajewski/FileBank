@@ -44,7 +44,7 @@ return array(
     ),
 );
 ```
-Next, create a new table in your application's MySQL database:
+Next, create a new table in your application's MySQL database by running the two queries in data/create_scema.sql file:
 
 ```php
 CREATE TABLE filebank (
