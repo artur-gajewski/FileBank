@@ -1,0 +1,32 @@
+{
+    "name": "artur-gajewski/FileBank",
+    "description": "A Zend Framework 2 module for uploading files to a File Bank along with metadata, keywords and status information and a controller to offer saved files for download.",
+    "type": "module",
+    "keywords": [
+        "zf2",
+        "filebank",
+        ""
+    ],
+    "homepage": "https://github.com/artur-gajewski/FileBank",
+    "authors": [
+        {
+            "name": "Artur Gajewski",
+            "email": "info@arturgajewski.com",
+            "homepage": "https://github.com/artur-gajewski"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/doctrine-orm-module": "dev-master",
+        "zendframework/zendframework": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "FileLib": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

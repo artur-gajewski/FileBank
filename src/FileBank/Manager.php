@@ -24,6 +24,11 @@ class Manager
     protected $cache;
     
     /**
+     * @var FileBank\Entity\File
+     */
+    protected $file;
+    
+    /**
      * Set the Module specific configuration parameters
      * 
      * @param Array $params
@@ -124,15 +129,15 @@ class Manager
         $hash     = md5(microtime(true) . $fileName);
         $savePath = substr($hash,0,1).'/'.substr($hash,1,1).'/';
 
-        $file = new File();
-        $file->setName($fileName);
-        $file->setMimetype($mimetype);
-        $file->setSize(filesize($sourceFilePath));
-        $file->setIsActive($this->params['default_is_active']);
-        $file->setSavepath($savePath . $hash);
-        $file = $this->addKeywordsToFile($keywords, $file);
+        $this->file = new File();
+        $this->file->setName($fileName);
+        $this->file->setMimetype($mimetype);
+        $this->file->setSize(filesize($sourceFilePath));
+        $this->file->setIsActive($this->params['default_is_active']);
+        $this->file->setSavepath($savePath . $hash);
+        $this->addKeywordsToFile($keywords);
         
-        $this->em->persist($file);
+        $this->em->persist($this->file);
         $this->em->flush();
         
         $absolutePath = $this->params['filebank_folder'] . $savePath . $hash;
@@ -144,7 +149,7 @@ class Manager
             throw new \Exception('File cannot be saved.');
         }
 
-        return $file;
+        return $this->file;
     }
     
     /**
@@ -154,22 +159,19 @@ class Manager
      * @param FileBank\Entity\File $fileEntity
      * @return FileBank\Entity\File 
      */
-    protected function addKeywordsToFile($keywords, $fileEntity) 
+    protected function addKeywordsToFile($keywords) 
     {
         $keywordEntities = array();
         
         foreach ($keywords as $word) {
             $keyword = new Keyword();
             $keyword->setValue(strtolower($word));
-            $keyword->setFile($fileEntity);
+            $keyword->setFile($this->file);
             $this->em->persist($keyword);
             
             $keywordEntities[] = $keyword;
         }
-        
-        $fileEntity->setKeywords($keywordEntities);
-        
-        return $fileEntity;
+        $this->file->setKeywords($keywordEntities);
     }
     
     /**

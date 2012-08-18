@@ -20,9 +20,9 @@ class Factory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator) {
         $config = $serviceLocator->get('Configuration');
         $params = $config['FileBank']['params'];
-        $doctrine = $serviceLocator->get('doctrine.entitymanager.orm_default');
+        $em = $serviceLocator->get('doctrine.entitymanager.orm_default');
 
-        $manager = new Manager($params, $doctrine);
+        $manager = new Manager($params, $em);
         return $manager;
     }
 }
