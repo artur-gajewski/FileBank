@@ -18,19 +18,17 @@ See [https://github.com/artur-gajewski/FileBank](https://github.com/artur-gajews
 @Author: Artur Gajewski
 
 
-## Installation
+## Installation with Composer
 
-Go to your vendor directory and clone the module from Github:
+Go to your project directory and add the following line to "require" list in composer.json file:
 
 ```php
-git clone https://github.com/artur-gajewski/FileBank
+"artur-gajewski/file-bank": "dev-master"
 ```
 
-Now go to your project root and install all needed dependancies, run the Composer:
+Now run the Composer:
 
 ```php
-curl -s https://getcomposer.org/installer | php
-
 php composer.phar install
 ```
 
