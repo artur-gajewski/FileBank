@@ -15,7 +15,7 @@ Requirements:
 
 See [https://github.com/artur-gajewski/FileBank](https://github.com/artur-gajewski/FileBank)
 
-@Author: Artur Gajewski
+Follow me on twitter: @GajewskiArtur
 
 
 ## Installation with Composer
