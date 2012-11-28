@@ -97,14 +97,17 @@ return array(
 
 This will override the default settings of provided package with your own settings.
 
-You can also modify default parameter settings that are provided with the package
+You can also modify default parameter settings that are provided with the package 
 so that they would suit your needs. Such parameters are:
+
+feel free to copy sample config `Filebank.php.dist` to APPLICATION_ROOT/config/autoload/FileBank.global.php 
+
 
 ```php
 'params' => array(
         'filebank_folder'   => '/data/filebank/', 
         'default_is_active' => true,
-        'chmod'             => 0755,
+        'chmod'             => '0755',
     ),
 ```
 
