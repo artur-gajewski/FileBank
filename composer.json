@@ -1,5 +1,5 @@
 {
-    "name": "artur-gajewski/file-bank",
+    "name": "stillmatic1985/file-bank",
     "description": "A Zend Framework 2 module for uploading files to a File Bank along with metadata, keywords and status information and a controller to offer saved files for download.",
     "type": "module",
     "keywords": [
