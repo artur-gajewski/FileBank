@@ -1,5 +1,5 @@
 {
-    "name": "stillmatic1985/file-bank",
+    "name": "artur-gajewski/file-bank",
     "description": "A Zend Framework 2 module for uploading files to a File Bank along with metadata, keywords and status information and a controller to offer saved files for download.",
     "type": "module",
     "keywords": [
@@ -7,12 +7,12 @@
         "filebank",
         ""
     ],
-    "homepage": "https://github.com/stillmatic1985/FileBank",
+    "homepage": "https://github.com/artur-gajewski/FileBank",
     "authors": [
         {
-            "name": "Fabian Köstring",
-            "email": "fabiankoestring@googlemail.com",
-            "homepage": "https://github.com/stillmatic1985"
+            "name": "Artur Gajewski",
+            "email": "info@arturgajewski.com",
+            "homepage": "https://github.com/artur-gajewski"
         }
     ],
     "minimum-stability": "dev",
