@@ -7,12 +7,12 @@
         "filebank",
         ""
     ],
-    "homepage": "https://github.com/artur-gajewski/FileBank",
+    "homepage": "https://github.com/stillmatic1985/FileBank",
     "authors": [
         {
-            "name": "Artur Gajewski",
-            "email": "info@arturgajewski.com",
-            "homepage": "https://github.com/artur-gajewski"
+            "name": "Fabian Köstring",
+            "email": "fabiankoestring@googlemail.com",
+            "homepage": "https://github.com/stillmatic1985"
         }
     ],
     "minimum-stability": "dev",
