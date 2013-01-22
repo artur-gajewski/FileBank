@@ -10,7 +10,7 @@ use FileBank\Entity\Keyword;
  * File entity.
  *
  * @ORM\Entity
- * @ORM\Table(name="FILEBANK")
+ * @ORM\Table(name="filebank")
  * @property int $id
  * @property string $name
  * @property int $size
