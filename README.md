@@ -137,7 +137,7 @@ You can also attach keywords for a file by adding an array to the save() functio
 ```php
 $keywords = array('Foo', 'Bar', 'Hey');
 
-$entity = $fileBank->save('/tmp/myfile.jpg', keywords);
+$entity = $fileBank->save('/tmp/myfile.jpg', $keywords);
 ```
 
 This will attach these three keywords to the file. You can fetch the files with a certain keyword(s) as follows:
