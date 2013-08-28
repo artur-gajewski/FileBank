@@ -18,8 +18,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "doctrine/doctrine-orm-module": "0.7.*",
-        "zendframework/zendframework": "2.*"
+        "zendframework/zendframework": "2.*",
+        "doctrine/doctrine-orm-module": "0.7"
     },
     "autoload": {
         "psr-0": {
