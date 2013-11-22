@@ -62,7 +62,7 @@ class File
     protected $savepath;
 
     /**
-     * @ORM\OneToMany(targetEntity="FileBank\Entity\Keyword", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="FileBank\Entity\Keyword", mappedBy="file", cascade={"all"})
      * @ORM\OrderBy({"id" = "ASC"})
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
