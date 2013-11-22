@@ -4,6 +4,8 @@ namespace FileBank;
 
 use FileBank\Entity\File;
 use FileBank\Entity\Keyword;
+use FileBank\Exception\RuntimeException;
+
 use Doctrine\ORM\Tools\SchemaValidator;
 
 class Manager
@@ -208,10 +210,11 @@ class Manager
      * Save file to FileBank database
      * 
      * @param string $sourceFilePath
-     * @return string $relativeFilePath
+     * @param array $keywords
+     * @return FileBank\Entity\File
      * @throws \Exception 
      */
-    public function save($sourceFilePath, Array $keywords = null)
+    public function save($sourceFilePath, array $keywords = array())
     {
         $fileName = basename($sourceFilePath);
         //$mimetype = mime_content_type($sourceFilePath);
@@ -235,7 +238,7 @@ class Manager
         try {
             $this->createPath($absolutePath, $this->params['chmod'], true);
             copy($sourceFilePath, $absolutePath);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception('File cannot be saved.');
         }
 
@@ -246,22 +249,26 @@ class Manager
      * Attach keywords to file entity
      * 
      * @param array $keywords
-     * @param FileBank\Entity\File $fileEntity
      * @return FileBank\Entity\File 
      */
-    protected function addKeywordsToFile($keywords) 
+    protected function addKeywordsToFile(array $keywords) 
     {
-        $keywordEntities = array();
-        
-        foreach ($keywords as $word) {
-            $keyword = new Keyword();
-            $keyword->setValue(strtolower($word));
-            $keyword->setFile($this->file);
-            $this->em->persist($keyword);
-            
-            $keywordEntities[] = $keyword;
+        if (!empty($keywords)) {
+            $keywordEntities = array();
+
+            foreach ($keywords as $word) {
+                $keyword = new Keyword();
+                $keyword->setValue(strtolower($word));
+                $keyword->setFile($this->file);
+                $this->em->persist($keyword);
+
+                $keywordEntities[] = $keyword;
+            }
+
+            $this->file->setKeywords($keywordEntities);
         }
-        $this->file->setKeywords($keywordEntities);
+        
+        return $this->file;
     }
     
     /**
@@ -269,17 +276,24 @@ class Manager
      * 
      * @param string $path
      * @param string $mode
-     * @param boolean $isFileIncluded 
-     * @return boolean
+     * @param boolean $isFileIncluded
+     * 
+     * @throws FileBank\Exception\RuntimeException
      */
     protected function createPath($path, $mode, $isFileIncluded)
     {
+        $success = true;
+        
         if (!is_dir(dirname($path))) {
             if ($isFileIncluded) {
-                mkdir(dirname($path), $mode, true);
+                $success = mkdir(dirname($path), $mode, true);
             } else {
-                mkdir($path, $mode, true);
+                $success = mkdir($path, $mode, true);
             }
+        }
+        
+        if (!$success) {
+            throw new RuntimeException('Can\'t create filebank storage folders');
         }
     }
 }
