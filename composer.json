@@ -25,7 +25,10 @@
     },
     "autoload": {
         "psr-0": {
-            "FileLib": "src/"
+            "FileBank\\": "src/"
+        },
+        "psr-4": {
+            "FileBank\\": "src/"
         },
         "classmap": [
             "./Module.php"
