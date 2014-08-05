@@ -6,8 +6,6 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-use FileBank\View\Helper\FileBank;
-
 class Module implements
     AutoloaderProviderInterface,
     ConfigProviderInterface,
@@ -47,6 +45,14 @@ class Module implements
         return array(
             'factories' => array(
                 'FileBank' => 'FileBank\Service\Factory',
+                Options\ModuleOptions::getServiceKey() => function ($sm) {
+                    /* @var $sm \Zend\ServiceManager\ServiceLocatorInterface */
+                    $config = $sm->get('Configuration');
+
+                    return new Options\ModuleOptions(
+                        $config['FileBank']['params']
+                    );
+                }
             )
         );
     }
