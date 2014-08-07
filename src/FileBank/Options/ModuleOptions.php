@@ -2,6 +2,7 @@
 namespace FileBank\Options;
 
 use Zend\Stdlib\AbstractOptions;
+use Zend\Filter;
 
 class ModuleOptions extends AbstractOptions
 {
@@ -89,7 +90,10 @@ class ModuleOptions extends AbstractOptions
      */
     public function setDefaultIsActive($defaultIsActive)
     {
-        $this->defaultIsActive = $defaultIsActive;
+        // Allow multiple value for default_is_active option
+        $filter = new Filter\Boolean(Filter\Boolean::TYPE_ZERO_STRING);
+
+        $this->defaultIsActive = $filter->filter($defaultIsActive);
         return $this;
     }
 }
