@@ -11,6 +11,8 @@ return array(
   'FileBank\Module'                             => __DIR__ . '/src/FileBank/Module.php',
   'FileBank\Options\ModuleOptions'              => __DIR__ . '/src/FileBank/Options/ModuleOptions.php',
   'FileBank\Service\Factory'                    => __DIR__ . '/src/FileBank/Service/Factory.php',
+  'FileBank\Validator\Chmod'                    => __DIR__ . '/src/FileBank/Validator/Chmod.php',
+  'FileBank\Validator\Octal'                    => __DIR__ . '/src/FileBank/Validator/Octal.php',
   'FileBank\Version'                            => __DIR__ . '/src/FileBank/Version.php',
   'FileBank\View\Helper\FileBank'               => __DIR__ . '/src/FileBank/View/Helper/FileBank.php',
 );
