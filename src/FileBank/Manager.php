@@ -4,7 +4,6 @@ namespace FileBank;
 use FileBank\Entity\File;
 use FileBank\Entity\Keyword;
 use FileBank\Exception;
-use FileBank\Exception\RuntimeException;
 
 class Manager
 {
@@ -172,9 +171,10 @@ class Manager
      * Get array of file entities based on given keyword
      *
      * @param array $keywords
+     * @param boolean $fromCache TMP FLAG FOR BACKWARD COMPATIBILITY
      * @return array
      */
-    public function getFilesByKeywords($keywords)
+    public function getFilesByKeywords($keywords, $fromCache = false)
     {
         // Create unique ID of the array for cache
         $id = md5(serialize($keywords));
@@ -183,7 +183,7 @@ class Manager
         $keywords = array_map('strtolower', $keywords );
 
         // Get the entity from cache if available
-        if (isset($this->cache[$id])) {
+        if ($fromCache && isset($this->cache[$id])) {
             return $this->cache[$id];
         }
 
