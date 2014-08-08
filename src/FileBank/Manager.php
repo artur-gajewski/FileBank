@@ -1,35 +1,32 @@
 <?php
-
 namespace FileBank;
 
 use FileBank\Entity\File;
 use FileBank\Entity\Keyword;
 use FileBank\Exception\RuntimeException;
 
-use Doctrine\ORM\Tools\SchemaValidator;
-
 class Manager
 {
     /**
-     * @var Array 
+     * @var array
      */
     protected $params;
 
-    /**            
-     * @var Doctrine\ORM\EntityManager
-     */                
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
     protected $em;
-    
+
     /**
      * @var array
      */
     protected $cache;
-    
+
     /**
-     * @var FileBank\Entity\File
+     * @var \FileBank\Entity\File
      */
     protected $file;
-    
+
     /**
      * @var array
      */
@@ -92,12 +89,12 @@ class Manager
         'odt' => 'application/vnd.oasis.opendocument.text',
         'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
     );
-    
+
     /**
      * Set the Module specific configuration parameters
-     * 
-     * @param Array $params
-     * @param Doctrine\ORM\EntityManager $em 
+     *
+     * @param array $params
+     * @param \Doctrine\ORM\EntityManager $em
      */
     public function __construct($params, $em) {
         $this->params = $params;
@@ -107,8 +104,8 @@ class Manager
 
     /**
      * Detetcs the mimetype of a file
-     * 
-     * @param null $sourceFilePath
+     *
+     * @param string $sourceFilePath
      * @param int $mode mode 0 = full check, mode 1 = extension check only
      * @return string
      */
@@ -133,22 +130,22 @@ class Manager
 
     /**
      * Get the FileBank's root folder
-     * 
-     * @return string 
+     *
+     * @return string
      */
-    public function getRoot() 
+    public function getRoot()
     {
         return $this->params['filebank_folder'];
     }
-    
+
     /**
      * Get the file entity based on ID
-     * 
+     *
      * @param integer $fileId
-     * @return FileBank\Entity\File 
-     * @throws \Exception 
+     * @return \FileBank\Entity\File
+     * @throws \Exception
      */
-    
+
     public function getFileById($fileId)
     {
         // Get the entity from cache if available
@@ -157,62 +154,62 @@ class Manager
         } else {
             $entity = $this->em->find('FileBank\Entity\File', $fileId);
         }
-        
+
         if (!$entity) {
             throw new \Exception('File does not exist.', 404);
         }
-        
+
         // Cache the file entity so we don't have to access db on each call
         // Enables to get multiple entity's properties at different times
         $this->cache[$fileId] = $entity;
         return $entity;
     }
-    
+
     /**
      * Get array of file entities based on given keyword
-     * 
-     * @param Array $keywords
-     * @return Array
-     * @throws \Exception 
+     *
+     * @param array $keywords
+     * @return array
+     * @throws \Exception
      */
     public function getFilesByKeywords($keywords)
     {
         // Create unique ID of the array for cache
         $id = md5(serialize($keywords));
-        
+
         // Change all given keywords to lowercase
         $keywords = array_map('strtolower', $keywords );
-        
+
         // Get the entity from cache if available
         if (isset($this->cache[$id])) {
             $entities = $this->cache[$id];
         } else {
             $list = "'" . implode("','", $keywords) . "'";
-            
+
             $q = $this->em->createQuery(
                     "select f from FileBank\Entity\File f, FileBank\Entity\Keyword k
                      where k.file = f
                      and k.value in (" . $list . ")"
                     );
-            
+
             $entities = $q->getResult();
-            
+
             return $entities;
         }
-        
+
         // Cache the file entity so we don't have to access db on each call
         // Enables to get multiple entity's properties at different times
         $this->cache[$id] = $entities;
         return $entities;
     }
-    
+
     /**
      * Save file to FileBank database
-     * 
+     *
      * @param string $sourceFilePath
      * @param array $keywords
-     * @return FileBank\Entity\File
-     * @throws \Exception 
+     * @return \FileBank\Entity\File
+     * @throws \Exception
      */
     public function save($sourceFilePath, array $keywords = array())
     {
@@ -229,12 +226,12 @@ class Manager
         $this->file->setIsActive($this->params['default_is_active']);
         $this->file->setSavepath($savePath . $hash);
         $this->addKeywordsToFile($keywords);
-        
+
         $this->em->persist($this->file);
         $this->em->flush();
-        
+
         $absolutePath = $this->params['filebank_folder'] . $savePath . $hash;
-        
+
         try {
             $this->createPath($absolutePath, $this->params['chmod'], true);
             copy($sourceFilePath, $absolutePath);
@@ -244,14 +241,14 @@ class Manager
 
         return $this->file;
     }
-    
+
     /**
      * Attach keywords to file entity
-     * 
+     *
      * @param array $keywords
-     * @return FileBank\Entity\File 
+     * @return \FileBank\Entity\File
      */
-    protected function addKeywordsToFile(array $keywords) 
+    protected function addKeywordsToFile(array $keywords)
     {
         if (!empty($keywords)) {
             $keywordEntities = array();
@@ -267,23 +264,23 @@ class Manager
 
             $this->file->setKeywords($keywordEntities);
         }
-        
+
         return $this->file;
     }
-    
+
     /**
      * Create path recursively
-     * 
+     *
      * @param string $path
      * @param string $mode
      * @param boolean $isFileIncluded
-     * 
-     * @throws FileBank\Exception\RuntimeException
+     *
+     * @throws \FileBank\Exception\RuntimeException
      */
     protected function createPath($path, $mode, $isFileIncluded)
     {
         $success = true;
-        
+
         if (!is_dir(dirname($path))) {
             if ($isFileIncluded) {
                 $success = mkdir(dirname($path), $mode, true);
@@ -291,7 +288,7 @@ class Manager
                 $success = mkdir($path, $mode, true);
             }
         }
-        
+
         if (!$success) {
             throw new RuntimeException('Can\'t create filebank storage folders');
         }
