@@ -1,8 +1,14 @@
 <?php
+/**
+ * @author Levis Florian <https://github.com/Gounlaf>
+ */
 namespace FileBank\Options;
 
 use Zend\Stdlib\AbstractOptions;
 use Zend\Filter;
+
+use FileBank\Validator;
+use FileBank\Exception;
 
 class ModuleOptions extends AbstractOptions
 {
@@ -27,6 +33,12 @@ class ModuleOptions extends AbstractOptions
      * @var boolean
      */
     protected $defaultIsActive = true;
+
+    /**
+     *
+     * @var \FileBank\Validator\Chmod
+     */
+    protected static $chmodValidator = null;
 
     public static function getServiceKey()
     {
@@ -70,6 +82,16 @@ class ModuleOptions extends AbstractOptions
      */
     public function setChmod($chmod)
     {
+        if (null === static::$chmodValidator) {
+            static::$chmodValidator = new Validator\Chmod();
+        }
+
+        if (!static::$chmodValidator->isValid($chmod)) {
+            throw new Exception\InvalidArgumentException(
+                implode(' ; ', static::$chmodValidator->getMessages())
+            );
+        }
+
         $this->chmod = $chmod;
         return $this;
     }
