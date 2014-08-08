@@ -5,6 +5,7 @@ return array(
   'FileBank\Entity\File'                        => __DIR__ . '/src/FileBank/Entity/File.php',
   'FileBank\Entity\Keyword'                     => __DIR__ . '/src/FileBank/Entity/Keyword.php',
   'FileBank\Exception\ExceptionInterface'       => __DIR__ . '/src/FileBank/Exception/ExceptionInterface.php',
+  'FileBank\Exception\FileNotFoundException'    => __DIR__ . '/src/FileBank/Exception/FileNotFoundException.php',
   'FileBank\Exception\InvalidArgumentException' => __DIR__ . '/src/FileBank/Exception/InvalidArgumentException.php',
   'FileBank\Exception\RuntimeException'         => __DIR__ . '/src/FileBank/Exception/RuntimeException.php',
   'FileBank\Manager'                            => __DIR__ . '/src/FileBank/Manager.php',

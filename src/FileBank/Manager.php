@@ -3,6 +3,7 @@ namespace FileBank;
 
 use FileBank\Entity\File;
 use FileBank\Entity\Keyword;
+use FileBank\Exception;
 use FileBank\Exception\RuntimeException;
 
 class Manager
@@ -143,7 +144,7 @@ class Manager
      *
      * @param integer $fileId
      * @return \FileBank\Entity\File
-     * @throws \Exception
+     * @throws \FileBank\Exception\FileNotFoundException
      */
 
     public function getFileById($fileId)
@@ -156,7 +157,9 @@ class Manager
         }
 
         if (!$entity) {
-            throw new \Exception('File does not exist.', 404);
+            throw new Exception\FileNotFoundException(
+                'File does not exist.', 404
+            );
         }
 
         // Cache the file entity so we don't have to access db on each call
@@ -170,7 +173,6 @@ class Manager
      *
      * @param array $keywords
      * @return array
-     * @throws \Exception
      */
     public function getFilesByKeywords($keywords)
     {
@@ -205,7 +207,7 @@ class Manager
      * @param string $sourceFilePath
      * @param array $keywords
      * @return \FileBank\Entity\File
-     * @throws \Exception
+     * @throws \FileBank\Exception\RuntimeException
      */
     public function save($sourceFilePath, array $keywords = array())
     {
@@ -232,7 +234,9 @@ class Manager
             $this->createPath($absolutePath, $this->params['chmod'], true);
             copy($sourceFilePath, $absolutePath);
         } catch (\Exception $e) {
-            throw new \Exception('File cannot be saved.');
+            throw new Exception\RuntimeException(
+                'File cannot be saved.', 0, $e
+            );
         }
 
         return $this->file;
@@ -286,7 +290,7 @@ class Manager
         }
 
         if (!$success) {
-            throw new RuntimeException('Can\'t create filebank storage folders');
+            throw new Exception\RuntimeException('Can\'t create filebank storage folders');
         }
     }
 }
