@@ -182,25 +182,21 @@ class Manager
 
         // Get the entity from cache if available
         if (isset($this->cache[$id])) {
-            $entities = $this->cache[$id];
-        } else {
-            $list = "'" . implode("','", $keywords) . "'";
-
-            $q = $this->em->createQuery(
-                    "select f from FileBank\Entity\File f, FileBank\Entity\Keyword k
-                     where k.file = f
-                     and k.value in (" . $list . ")"
-                    );
-
-            $entities = $q->getResult();
-
-            return $entities;
+            return $this->cache[$id];
         }
+
+        $list = "'" . implode("','", $keywords) . "'";
+
+        $q = $this->em->createQuery(
+            "select f from FileBank\Entity\File f, FileBank\Entity\Keyword k
+             where k.file = f
+             and k.value in (" . $list . ")"
+            );
 
         // Cache the file entity so we don't have to access db on each call
         // Enables to get multiple entity's properties at different times
-        $this->cache[$id] = $entities;
-        return $entities;
+        $this->cache[$id] = $q->getResult();
+        return $this->cache[$id];
     }
 
     /**
