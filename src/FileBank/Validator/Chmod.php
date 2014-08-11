@@ -49,10 +49,16 @@ class Chmod extends AbstractValidator
             return false;
         }
 
-        // TODO: Validate string like -rw-r-xr-x ?
         if (is_string($value)) {
             if ('' === $value) {
                 $this->error(self::STRING_EMPTY);
+                return false;
+            }
+
+            // TODO: Validate string like -rw-r-xr-x ?
+            $length = strlen($value);
+            if ($length > 4 || $length < 3) {
+                $this->error(self::NOT_CHMOD);
                 return false;
             }
         }
