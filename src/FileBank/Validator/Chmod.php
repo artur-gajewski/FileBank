@@ -5,30 +5,24 @@
 namespace FileBank\Validator;
 
 use Zend\Validator\AbstractValidator;
-use Zend\Validator\Digits;
 
-use FileBank\Validator\Octal;
+use FileBank\Filter;
+use FileBank\Exception;
 
 class Chmod extends AbstractValidator
 {
     const NOT_CHMOD     = 'notChmod';
     const NOT_DIGITS    = 'notDigits';
+    const NOT_OCTAL     = 'notOctal';
     const STRING_EMPTY  = 'chmodStringEmpty';
     const INVALID       = 'chmodInvalid';
 
     /**
-     * Digits validator used for validation
-     *
-     * @var \Zend\Validator\Digits
-     */
-    protected static $validatorDigits = null;
-
-    /**
      * Octal validator used for validation
      *
-     * @var \Application\Validator\Octal
+     * @var \Application\Filter\Octal
      */
-    protected static $validatorOctal = null;
+    protected static $filterOctal = null;
 
     /**
      * Validation failure message template definitions
@@ -36,12 +30,16 @@ class Chmod extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_CHMOD     => "The input is not a valid mode",
-        self::NOT_DIGITS    => "The input must contain only digits",
-        self::STRING_EMPTY  => "The input is an empty string",
-        self::INVALID       => "Invalid type given. String or integer expected",
+        self::NOT_CHMOD     => 'The input is not a valid file mode',
+        self::NOT_DIGITS    => 'The input must contain only digits',
+        self::NOT_OCTAL     => 'The input is not octal or cannot be converted in octal',
+        self::STRING_EMPTY  => 'The input is an empty string',
+        self::INVALID       => 'Invalid type given. String or integer expected'
     );
 
+    /**
+     * {@inheritDoc}
+     */
     public function isValid($value)
     {
         $this->setValue($value);
@@ -57,37 +55,29 @@ class Chmod extends AbstractValidator
                 $this->error(self::STRING_EMPTY);
                 return false;
             }
-
-            if (null === static::$validatorDigits) {
-                static::$validatorDigits = new Digits();
-            }
-
-            if (!static::$validatorDigits->isValid($value)) {
-                $this->error(self::NOT_CHMOD);
-                return false;
-            }
-
-            $length = strlen($value);
-            if ($length > 4 || $length < 3) {
-                $this->error(self::NOT_CHMOD);
-                return false;
-            }
-
-            // Convert to octal
-            $value = octdec($value);
         }
 
-        if (null === static::$validatorOctal) {
-            static::$validatorOctal = new Octal();
+        if (null === static::$filterOctal) {
+            static::$filterOctal = new Filter\Octal();
         }
 
-        if (static::$validatorOctal->isValid($value)) {
-            // Convert to decimal
-            $value = intval($value, 10);
+        try {
+            $value = static::$filterOctal->filter($value);
+        } catch (Exception\InvalidArgumentException $e) {
+            switch ($e->getCode()) {
+                case Filter\Octal::NOT_DIGITS:
+                    $this->error(self::NOT_DIGITS);
+                    break;
+
+                case Filter\Octal::NOT_OCTAL:
+                    $this->error(self::NOT_OCTAL);
+                    break;
+            }
+
+            return false;
         }
 
-        // 0777 - 0000
-        if ($value > 511 || $value < 0) {
+        if ($value > 0777 || $value < 0) {
             $this->error(self::NOT_CHMOD);
             return false;
         }
