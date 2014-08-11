@@ -8,6 +8,7 @@ return array(
   'FileBank\Exception\FileNotFoundException'    => __DIR__ . '/src/FileBank/Exception/FileNotFoundException.php',
   'FileBank\Exception\InvalidArgumentException' => __DIR__ . '/src/FileBank/Exception/InvalidArgumentException.php',
   'FileBank\Exception\RuntimeException'         => __DIR__ . '/src/FileBank/Exception/RuntimeException.php',
+  'FileBank\Filter\Octal'                       => __DIR__ . '/src/FileBank/Filter/Octal.php',
   'FileBank\Manager'                            => __DIR__ . '/src/FileBank/Manager.php',
   'FileBank\Module'                             => __DIR__ . '/src/FileBank/Module.php',
   'FileBank\Options\ModuleOptions'              => __DIR__ . '/src/FileBank/Options/ModuleOptions.php',
