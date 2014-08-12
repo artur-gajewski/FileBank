@@ -66,12 +66,13 @@ class Module implements
             'factories' => array(
                 'getFileById' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $config = $locator->get('Configuration');
-                    $params = $config['FileBank']['params'];
+
+                    /* @var $config \FileBank\Options\ModuleOptions */
+                    $config = $locator->get(Options\ModuleOptions::getServiceKey());
 
                     $viewHelper = new View\Helper\FileBank();
                     $viewHelper->setService($locator->get('FileBank'));
-                    $viewHelper->setParams($params);
+                    $viewHelper->setParams($config->toArray());
 
                     return $viewHelper;
                 },
