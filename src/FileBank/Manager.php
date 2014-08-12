@@ -97,6 +97,12 @@ class Manager
      * @param \Doctrine\ORM\EntityManager $em
      */
     public function __construct($params, $em) {
+        // Compatibility
+        if (isset($params['filebank_folder'])) {
+            $params['file_bank_folder'] = $params['filebank_folder'];
+            unset ($params['filebank_folder']);
+        }
+
         $this->params = $params;
         $this->em = $em;
         $this->cache = array();
@@ -135,7 +141,7 @@ class Manager
      */
     public function getRoot()
     {
-        return $this->params['filebank_folder'];
+        return $this->params['file_bank_folder'];
     }
 
     /**
@@ -228,7 +234,7 @@ class Manager
         $this->em->persist($this->file);
         $this->em->flush();
 
-        $absolutePath = $this->params['filebank_folder'] . $savePath . $hash;
+        $absolutePath = $this->params['file_bank_folder'] . $savePath . $hash;
 
         try {
             $this->createPath($absolutePath, $this->params['chmod'], true);
