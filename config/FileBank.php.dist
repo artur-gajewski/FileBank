@@ -1,9 +1,12 @@
 <?php
 return array(
-    "FileBank" => array(
+    'FileBank' => array(
         'params' => array(
+            // Must be relative to root
             'filebank_folder'  => './data/filebank/',
+            // Boolean
             'default_is_active' => true,
+            // Must be in octal ; ModuleOptions will throw exception 
             'chmod'           => 0755,
         ),
     )
