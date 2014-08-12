@@ -17,6 +17,7 @@
     "minimum-stability": "dev",
     "require": {
         "zendframework/zend-filter": "~2.3",
+        "zendframework/zend-http": "~2.3",
         "zendframework/zend-modulemanager": "~2.3",
         "zendframework/zend-mvc": "~2.3",
         "zendframework/zend-validator": "~2.3",
