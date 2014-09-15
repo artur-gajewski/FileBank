@@ -1,11 +1,10 @@
 <?php
-
 namespace FileBank;
 
 return array(
     __NAMESPACE__ => array(
         'params' => array(
-            'filebank_folder'  => '/data/filebank/', 
+            'filebank_folder'  => '/data/filebank/',
             'default_is_active' => true,
             'chmod'           => 0755,
         ),
@@ -43,18 +42,6 @@ return array(
         ),
     ),
     'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host'     => 'localhost',
-                    'port'     => '3306',
-                    'user'     => 'username',
-                    'password' => 'password',
-                    'dbname'   => 'database_name',
-                )
-            )
-        ),
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',

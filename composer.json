@@ -16,13 +16,24 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*",
-        "doctrine/doctrine-orm-module": "~0.7"
+        "zendframework/zend-filter": "~2.3",
+        "zendframework/zend-http": "~2.3",
+        "zendframework/zend-modulemanager": "~2.3",
+        "zendframework/zend-mvc": "~2.3",
+        "zendframework/zend-validator": "~2.3",
+        "zendframework/zend-view": "~2.3",
+        "zendframework/zend-servicemanager": "~2.3",
+        "doctrine/doctrine-orm-module": "0.8.*"
+    },
+    "require-dev": {
+        "zendframework/zend-debug": "~2.3"
     },
     "autoload": {
         "psr-0": {
-            "FileLib": "src/"
+            "FileBank\\": "src/"
+        },
+        "psr-4": {
+            "FileBank\\": "src/"
         },
         "classmap": [
             "./Module.php"

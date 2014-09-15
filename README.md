@@ -1,4 +1,5 @@
-# FileBank module for Zend Framework 2
+FileBank module for Zend Framework 2
+====================================
 
 This module provides a way to store files in a structured database and file accessors to obtain the file for download or display without
 the need to setup public folders and worry about security and htaccess configurations. 
@@ -23,7 +24,7 @@ Follow me on twitter: @GajewskiArtur
 Go to your project directory and add the following line to "require" list in composer.json file:
 
 ```php
-"artur-gajewski/file-bank": "dev-master"
+"artur-gajewski/file-bank": "v1.0"
 ```
 
 Now run the Composer:
@@ -44,7 +45,12 @@ return array(
     ),
 );
 ```
-Next, create a new table in your application's MySQL database by running the two queries in data/create_scema.sql file:
+Next: database update
+
+**OPTION 1:** Use the DoctrineModule Command Line Interface (orm:schema-tool:update) to update your database
+
+
+**OPTION 2:** Create a new table in your application's MySQL database by running the two queries in data/create_scema.sql file:
 
 ```php
 CREATE TABLE filebank (
@@ -105,13 +111,13 @@ feel free to copy sample config `Filebank.php.dist` to APPLICATION_ROOT/config/a
 
 ```php
 'params' => array(
-        'filebank_folder'   => '/data/filebank/', 
-        'default_is_active' => true,
-        'chmod'             => '0755',
-    ),
+	'file_bank_folder'   => './data/filebank/', 
+	'default_is_active' => true,
+	'chmod'             => 0755
+),
 ```
 
-- filebank_folder   -> filebank root folder where the files will be saved to
+- file_bank_folder   -> filebank root folder where the files will be saved to
 - default_is_active -> should the file be set as active by default
 - chmod             -> after a folder is created, what chmod should it have
 
